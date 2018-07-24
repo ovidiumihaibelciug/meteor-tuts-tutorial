@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default class PostList extends React.Component {
     constructor() {
@@ -32,6 +33,7 @@ export default class PostList extends React.Component {
                                     history.push("/posts/edit/" + post._id)
                                 }}> Edit post
                                 </button>
+                                <Link to={"/posts/" + post._id}>View post</Link>
                             </div>
                         )
                     })}

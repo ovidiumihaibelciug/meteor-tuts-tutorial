@@ -1,5 +1,5 @@
 import React from 'react';
-import {AutoForm, AutoField, LongTextField} from 'uniforms-unstyled';
+import {AutoForm, AutoField, LongTextField, SelectField} from 'uniforms-unstyled';
 import PostSchema from '/db/posts/schema';
 
 export default class PostCreate extends React.Component {
@@ -18,12 +18,20 @@ export default class PostCreate extends React.Component {
 
     render() {
         const {history} = this.props;
-
+        let data = [
+            {label: 'Nature', value: 0},
+            {label: 'Psychology', value: 1},
+            {label: "Music", value: 3},
+            {label: "Programming", value: 4},
+            {label: "Project Management", value: 5},
+            {label: "Other", value: 6}
+        ]
         return (
             <div className="post">
                 <AutoForm onSubmit={this.submit} schema={PostSchema}>
                     <AutoField name="title"/>
                     <LongTextField name="description"/>
+                    <SelectField name="type" options={data} />
 
                     <button type='submit'>Add post</button>
                     <button onClick={() => history.push('/posts')}>Back to posts</button>
