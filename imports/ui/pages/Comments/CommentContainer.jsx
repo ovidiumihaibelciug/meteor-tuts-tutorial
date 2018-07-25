@@ -14,9 +14,7 @@ export default class CommentContainer extends Component {
         const postId = nextProps.postId;
         Meteor.call('comment.list', postId, (err, comments) => {
             if (err) console.log(err);
-
             this.setState({comments})
-
         })
     }
 
@@ -28,6 +26,7 @@ export default class CommentContainer extends Component {
             Meteor.call('comment.list', postId, (err, comments) => {
                 if(err) console.log(err)
                 this.setState({comments});
+                console.log(comments);
             })
 
         });

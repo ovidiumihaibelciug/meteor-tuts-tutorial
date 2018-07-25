@@ -1,24 +1,16 @@
 import {Meteor} from 'meteor/meteor'
-import {Comments} from '/db';
-import {Users} from '/db';
+import CommentService from './services/CommentService';
 
 Meteor.methods({
     'comment.create' (comment, userId, postId) {
-        comment.userId = userId;
-        comment.postId = postId;
-        Comments.insert(comment);
+        CommentService.createComment(comment, userId, postId);
     },
 
     'comment.list' (postId) {
-        const comments =  Comments.find({postId}).fetch();
-        comments.forEach(comment => {
-            const user = Users.findOne(comment.userId);
-            comment.userEmail = user.emails[0].address;
-        });
-        return comments;
+        return CommentService._getCommentsFromPost(postId);
     },
 
     'comment.remove' (_id) {
-        Comments.remove(_id);
+        CommentService.removeComment(_id);
     }
 });

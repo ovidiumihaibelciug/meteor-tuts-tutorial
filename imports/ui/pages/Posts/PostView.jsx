@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import CommentContainer from '../Comments/CommentContainer';
+import {PostTypesLabel} from '/db/posts/enums/types';
 
 export default class PostView extends Component {
 
@@ -37,10 +38,12 @@ export default class PostView extends Component {
                 <p>Title: {title}</p>
                 <p>Description: {description}</p>
                 <p>Created at: {new Date(createdAt).toLocaleDateString()}</p>
-                <p>Type: {type}</p>
+                <p>Type: {PostTypesLabel[type]}</p>
                 <p>Views: {views}</p>
                 <p>UserId: {userId}</p>
-                <button onClick={() => this.deletePost(_id)}>Delete Post</button>
+                {
+                    userId === Meteor.userId() && <button onClick={() => this.deletePost(_id)}>Delete Post</button>
+                }
                 <CommentContainer postId={_id} />
             </div>
         )

@@ -1,4 +1,7 @@
-import SimplSchema from 'simpl-schema';// Returns an array of label/value
+import _ from 'underscore';
+import PostTypesEnum from './enums/types';
+import SimplSchema from 'simpl-schema';
+
 
 export default new SimplSchema({
     title: String,
@@ -16,6 +19,7 @@ export default new SimplSchema({
         defaultValue: new Date()
     },
     type: {
-        type: Number
+        type: String,
+        allowedValues: _.values(PostTypesEnum)
     }
 });

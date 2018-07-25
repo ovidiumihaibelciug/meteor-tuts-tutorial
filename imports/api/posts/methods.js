@@ -1,50 +1,33 @@
-import {Meteor} from 'meteor/meteor'
-import {Posts} from '/db';
-import {Comments} from '/db'
+import PostService from './services/PostService';
+import CommentService from '../comments/services/CommentService';
 
 Meteor.methods({
     'post.create'(post) {
-        Posts.insert(post);
+        PostService.createPost(post);
     },
 
     'post.list' () {
-        return Posts.find().fetch();
+        return PostService._getPost();
     },
 
     'post.edit' (_id, post) {
-        Posts.update(_id, {
-            $set: {
-                title: post.title,
-                description: post.description,
-                type: post.type
-            }
-        });
+        PostService.updatePost(_id, post);
     },
 
     'post.remove' (_id){
-        Posts.remove({_id: _id, userId: this.userId});
-        Comments.remove({postId: _id, userId: this.userId});
+        PostService.removePost(_id);
+        CommentService.removeComments(_id);
     },
 
     'post.get' (_id) {
-        return Posts.findOne(_id);
+        return PostService._getPost(_id);
     },
 
     'post.increment-view' (_id) {
-        const post =  Posts.findOne(_id);
-        Posts.update(_id, {
-            $set: {
-                views: post.views+1
-            }
-        })
+       PostService.incrementPostViews(_id);
     },
 
     'post.comments' (_id) {
-        const posts = Posts.find().fetch();
-        posts.forEach(post => {
-            const comments =  Comments.find({postId: post._id}).fetch();
-            post.commentsLength = comments.length;
-        });
-        return posts;
+       return PostService._getPostWithComments(_id);
     }
 });

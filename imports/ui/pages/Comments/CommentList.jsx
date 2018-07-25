@@ -27,10 +27,10 @@ export default class CommentList extends Component {
         if (!comments) return <div>Loading...</div>;
         return comments && post && comments.map(comment => {
             return (
-                <Fragment>
-                    <p key={comment._id}>{comment.userEmail} * {comment.text}</p>
+                <Fragment key={comment._id}>
+                    <p key={comment._id}>{comment.user.emails[0].address} * {comment.text}</p>
                     {
-                        (comment.userId === Meteor.userId() || postUserId === Meteor.userId()) && (
+                        (comment.user._id === Meteor.userId() || postUserId === Meteor.userId()) && (
                             <button onClick={() => this.deleteComment(comment._id)}>Delete</button>
                         )
                     }

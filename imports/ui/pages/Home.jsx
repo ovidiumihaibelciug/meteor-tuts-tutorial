@@ -11,7 +11,7 @@ export default class Home extends React.Component {
     }
     getRandomNumber = () =>  {
         Meteor.call('find.random_number',(err, number) => {
-           this.setState({number})
+            this.setState({number})
         });
     };
 

@@ -24,7 +24,7 @@ export default class Login extends React.Component {
                     <ErrorsField/>
 
                     <AutoField name="email"
-                               placeholder="Email"/>
+                        placeholder="Email"/>
 
                     <AutoField name="password" type="password" placeholder="Password"/>
 

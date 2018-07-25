@@ -32,13 +32,13 @@ export default class PostList extends React.Component {
                 }
                 {
                     posts.map((post) => {
-                        const {_id, title, description, views, commentsLength} = post;
+                        const {_id, title, description, views, comments} = post;
                         return (
                             <div key={_id}>
                                 <p>Post id: {_id} </p>
                                 <p>Post title: {title}, Post Description: {description} </p>
                                 <p>Post Views: {views}</p>
-                                <p>Post Comments: {commentsLength} </p>
+                                <p>Post Comments: {comments ? comments.length : 0} </p>
                                 <button onClick={() => {
                                     history.push("/posts/edit/" + _id)
                                 }}> Edit post
