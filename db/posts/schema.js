@@ -1,5 +1,4 @@
 import SimplSchema from 'simpl-schema';// Returns an array of label/value
-import uniforms from 'uniforms';
 
 export default new SimplSchema({
     title: String,

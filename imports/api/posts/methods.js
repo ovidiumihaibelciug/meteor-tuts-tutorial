@@ -1,5 +1,6 @@
 import {Meteor} from 'meteor/meteor'
 import {Posts} from '/db';
+import {Comments} from '/db'
 
 Meteor.methods({
     'post.create'(post) {
@@ -21,7 +22,8 @@ Meteor.methods({
     },
 
     'post.remove' (_id){
-        Posts.remove(_id);
+        Posts.remove({_id: _id, userId: this.userId});
+        Comments.remove({postId: _id, userId: this.userId});
     },
 
     'post.get' (_id) {
@@ -35,5 +37,14 @@ Meteor.methods({
                 views: post.views+1
             }
         })
+    },
+
+    'post.comments' (_id) {
+        const posts = Posts.find().fetch();
+        posts.forEach(post => {
+            const comments =  Comments.find({postId: post._id}).fetch();
+            post.commentsLength = comments.length;
+        });
+        return posts;
     }
 });

@@ -2,13 +2,18 @@ import React from 'react';
 import {AutoForm, AutoField, LongTextField, SelectField} from 'uniforms-unstyled';
 import PostSchema from '/db/posts/schema';
 
+
 export default class PostCreate extends React.Component {
     constructor() {
         super();
     }
 
+    componentDidMount() {
+        if (!Meteor.userId()) this.props.history.push('/posts')
+    }
+
     submit = (post) => {
-        Meteor.call('post.create', post, (err) => {
+        Meteor.call('secured.post_create', post, (err) => {
             if (err) {
                 return alert(err.reason);
             }
@@ -19,8 +24,8 @@ export default class PostCreate extends React.Component {
     render() {
         const {history} = this.props;
         let data = [
-            {label: 'Nature', value: 0},
             {label: 'Psychology', value: 1},
+            {label: 'Nature', value: 2},
             {label: "Music", value: 3},
             {label: "Programming", value: 4},
             {label: "Project Management", value: 5},

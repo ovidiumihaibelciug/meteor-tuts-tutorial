@@ -8,7 +8,9 @@ export default class PostList extends React.Component {
     }
 
     componentDidMount() {
-        Meteor.call('post.list', (err, posts) => {
+        Meteor.call('post.comments', (err, posts) => {
+            if (err) console.log(err);
+            console.log(posts);
             this.setState({posts});
         });
     }
@@ -16,7 +18,6 @@ export default class PostList extends React.Component {
     render() {
         const {posts} = this.state;
         const {history} = this.props;
-
         if (!posts) {
             return <div>Loading....</div>
         }
@@ -24,20 +25,30 @@ export default class PostList extends React.Component {
         return (
             <div className="post">
                 {
+                    Meteor.userId() ?
+                        <button onClick={() => history.push('/posts/create')}>Create a new post</button>
+                        :
+                        (<p><Link to="/login">Login</Link> or <Link to="/register">Register</Link> to add a post </p>)
+                }
+                {
                     posts.map((post) => {
+                        const {_id, title, description, views, commentsLength} = post;
                         return (
-                            <div key={post._id}>
-                                <p>Post id: {post._id} </p>
-                                <p>Post title: {post.title}, Post Description: {post.description} </p>
+                            <div key={_id}>
+                                <p>Post id: {_id} </p>
+                                <p>Post title: {title}, Post Description: {description} </p>
+                                <p>Post Views: {views}</p>
+                                <p>Post Comments: {commentsLength} </p>
                                 <button onClick={() => {
-                                    history.push("/posts/edit/" + post._id)
+                                    history.push("/posts/edit/" + _id)
                                 }}> Edit post
                                 </button>
-                                <Link to={"/posts/" + post._id}>View post</Link>
+                                <Link to={"/posts/view/" + _id}>View post</Link>
                             </div>
                         )
-                    })}
-                <button onClick={() => history.push('/posts/create')}>Create a new post</button>
+                    })
+                }
+
             </div>
         )
     }

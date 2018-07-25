@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+
+import CommentContainer from '../Comments/CommentContainer';
 
 export default class PostView extends Component {
 
@@ -17,18 +19,29 @@ export default class PostView extends Component {
         })
     }
 
+    deletePost = id => {
+        Meteor.call('post.remove', id, err => {
+            console.log(err);
+        })
+        this.props.history.push('/posts');
+    }
+
     render() {
         const {post} = this.state;
-        const { _id, title, description, createAt, type, views } = post;
         if (!post) return <div>Loading..</div>
+
+        const { _id, title, description, createdAt, type, views, userId } = post;
         return (
             <div>
                 <p>Id: {_id}</p>
                 <p>Title: {title}</p>
                 <p>Description: {description}</p>
-                <p>Created at: {createAt}</p>
+                <p>Created at: {new Date(createdAt).toLocaleDateString()}</p>
                 <p>Type: {type}</p>
                 <p>Views: {views}</p>
+                <p>UserId: {userId}</p>
+                <button onClick={() => this.deletePost(_id)}>Delete Post</button>
+                <CommentContainer postId={_id} />
             </div>
         )
     }
