@@ -1,0 +1,7 @@
+type User {
+    emails: Array,
+    createdAt: String,
+    services: Object,
+    comments: [Comment],
+    posts: [Posts]
+}

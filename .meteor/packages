@@ -24,3 +24,5 @@ react-meteor-data
 alanning:roles
 underscore
 cultofcoders:grapher
+cultofcoders:apollo
+swydo:graphql

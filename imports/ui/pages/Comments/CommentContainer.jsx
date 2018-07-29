@@ -10,8 +10,16 @@ export default class CommentContainer extends Component {
         comments: []
     }
 
+    componentDidMount() {
+        this.getComments(this.props);
+    }
+
     componentWillReceiveProps(nextProps) {
-        const postId = nextProps.postId;
+        this.getComments(nextProps);
+    }
+
+    getComments = props => {
+        const postId = props.postId;
         Meteor.call('comment.list', postId, (err, comments) => {
             if (err) console.log(err);
             this.setState({comments})

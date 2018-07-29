@@ -16,6 +16,7 @@ export default class PostView extends Component {
         })
         Meteor.call('post.get', id, (err, post) => {
             if (err) console.log(err);
+            console.log("POST", post);
             this.setState({post});
         })
     }
@@ -29,9 +30,8 @@ export default class PostView extends Component {
 
     render() {
         const {post} = this.state;
-        if (!post) return <div>Loading..</div>
-
-        const { _id, title, description, createdAt, type, views, userId } = post;
+        if (!post || !post.user) return <div>Loading..</div>
+        const { _id, title, description, createdAt, type, views, user } = post;
         return (
             <div>
                 <p>Id: {_id}</p>
@@ -40,9 +40,9 @@ export default class PostView extends Component {
                 <p>Created at: {new Date(createdAt).toLocaleDateString()}</p>
                 <p>Type: {PostTypesLabel[type]}</p>
                 <p>Views: {views}</p>
-                <p>UserId: {userId}</p>
+                <p>UserEmail: {user.emails[0].address}</p>
                 {
-                    userId === Meteor.userId() && <button onClick={() => this.deletePost(_id)}>Delete Post</button>
+                    user._id === Meteor.userId() && <button onClick={() => this.deletePost(_id)}>Delete Post</button>
                 }
                 <CommentContainer postId={_id} />
             </div>

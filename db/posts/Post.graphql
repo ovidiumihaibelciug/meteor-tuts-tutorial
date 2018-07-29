@@ -1,0 +1,9 @@
+type Post {
+    title: String!,
+    description: String!,
+    views: Number!,
+    createdAt: String!,
+    type: String!
+    user: User,
+    comments: [Comment]
+}

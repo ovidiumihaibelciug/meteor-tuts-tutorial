@@ -13,7 +13,20 @@
   "pre-commit": "lint-staged",
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.36",
+    "apollo-cache-inmemory": "^1.2.6",
+    "apollo-client": "^2.3.7",
+    "apollo-link": "^1.2.2",
+    "apollo-link-http": "^1.5.4",
+    "apollo-link-ws": "^1.0.8",
+    "apollo-live-client": "^0.2.0",
+    "apollo-live-server": "^0.2.0",
+    "apollo-morpher": "^0.1.2",
+    "apollo-server-express": "^2.0.0",
     "bcrypt": "^1.0.3",
+    "graphql": "^0.13.2",
+    "graphql-load": "^0.1.1",
+    "graphql-tools": "^3.0.5",
+    "graphql-type-json": "^0.2.1",
     "history": "^4.7.2",
     "meteor-node-stubs": "^0.3.2",
     "moment": "^2.20.1",
@@ -23,9 +36,11 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "simpl-schema": "^1.4.2",
+    "subscriptions-transport-ws": "^0.9.13",
     "underscore": "^1.9.1",
     "uniforms": "^1.23.0",
-    "uniforms-unstyled": "^1.23.0"
+    "uniforms-unstyled": "^1.23.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.6",

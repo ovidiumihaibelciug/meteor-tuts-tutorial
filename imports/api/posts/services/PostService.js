@@ -1,4 +1,6 @@
 import Posts from '/db/posts/collection';
+import { getPostsWithComments } from '/db/queries';
+import { getPost} from '/db/queries';
 
 class PostService {
 
@@ -17,34 +19,21 @@ class PostService {
     }
 
     static _getPost (_id) {
-        return Posts.findOne(_id);
+        return getPost.clone({
+            _id: _id
+        }).fetchOne();
     }
 
     static _getPosts () {
-        return Posts.createQuery({
-            title: 1,
-            description: 1,
-            userId: 1,
-            views: 1,
-            createdAt: 1,
-            type: 1
+        return createQuery({
+            getPosts
         }).fetch();
     }
 
     static _getPostWithComments (_id) {
-        const query = Posts.createQuery({
-            $filters: {
-                postId: _id
-            },
-            title: 1,
-            desciption: 1,
-            views: 1,
-            comments: {
-                _id: 1
-            }
-        });
-        console.log(query.fetch());
-        return query.fetch();
+        return getPostsWithComments.clone({
+            postId: _id
+        }).fetch();
     }
 
     static incrementPostViews (_id) {
@@ -57,7 +46,7 @@ class PostService {
     }
 
     static removePost (_id) {
-        Posts.remove({_id: _id, userId: this.userId});
+        Posts.remove({_id: _id, userId: Meteor.userId()});
     }
 }
 
